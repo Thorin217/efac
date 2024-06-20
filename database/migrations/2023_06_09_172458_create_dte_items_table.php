@@ -34,7 +34,6 @@ return new class extends Migration
 
             $table->foreign('dte_id')->references('id')->on('dtes');
             $table->foreign('tributes_type_id')->references('id')->on('tributes_types');
-            $table->foreign('product_service_id')->references('id')->on('product_services');
             $table->foreign('related_document_id')->references('id')->on('related_documents');
 
             $table->unique(['dte_id', 'product_service_id'], 'unique_dte_product_service');
