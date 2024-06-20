@@ -1,0 +1,40 @@
+{
+    "name": "exactum/efac",
+    "description": "Package for the electronic billing module of El Salvador",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marvin Escobar",
+            "email": "escobarjose937@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0.2",
+        "barryvdh/laravel-dompdf": "^2.0",
+        "guzzlehttp/guzzle": "^7.2",
+        "kwn/number-to-words": "^2.6",
+        "lcobucci/jwt": "^5.3",
+        "maatwebsite/excel": "^3.1",
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "spatie/laravel-activitylog": "^4.7",
+        "justinrainbow/json-schema": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Exactum\\Efac\\": "src/"
+        },
+        "files": [
+            "src/Helpers/ApiResponseHelper.php",
+            "src/Helpers/AuthUserHelper.php",
+            "src/Helpers/MultipurposeHelper.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Exactum\\Efac\\EfacServiceProvider"
+            ]
+        }
+    }
+}
