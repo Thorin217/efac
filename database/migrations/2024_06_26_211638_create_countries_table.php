@@ -28,7 +28,7 @@ return new class extends Migration
                 }
 
                 if (!Schema::hasColumn('countries', 'country_code')) {
-                    $table->boolean('country_code')->nullable();
+                    $table->string('country_code', 10)->nullable();
                 }
             });
         } else {
