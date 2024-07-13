@@ -41,7 +41,8 @@ class Entity extends Model
         'is_provider',
         'remote_provider_id',
         'remotable_id',
-        'remotable_type'
+        'remotable_type',
+        'is_foreign'
     ];
 
     protected $hidden = [
