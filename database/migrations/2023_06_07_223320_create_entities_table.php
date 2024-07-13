@@ -28,6 +28,7 @@ return new class extends Migration
             $table->bigInteger('remotable_id')->nullable();
             $table->boolean('approved')->default(false);
             $table->string('photo', 100)->nullable();
+            $table->boolean('is_foreign')->default(false);
             $table->timestamps();
             $table->softDeletes();
 
