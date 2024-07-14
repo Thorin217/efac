@@ -147,8 +147,9 @@ final class BoosterService
     public function createExportSummaryByDte(Dte $dte, array $dataSummary, array $dataExportSummary)
     {
         $data = array_merge($dataSummary, [
-            'regimen_id' => Regimen::whereGoesId($dataExportSummary['regime'])->first()->id ?? null,
-            'incoterm_id' => Incoterm::whereGoesId($dataExportSummary['incoterm'])->first()->id ?? null,
+            'regimen_id' => $dataExportSummary['regime'] ?? null,
+            'incoterm_id' => $dataExportSummary['incoterm'] ?? null,
+            'tax_revenue_id' => $$dataExportSummary['revenue'] ?? null,
             'insurance' => $dataExportSummary['insurance'] ?? 0,
             'flete' => $dataExportSummary['freight'] ?? 0,
             'observations' => $dataExportSummary['observations'] ?? null,
