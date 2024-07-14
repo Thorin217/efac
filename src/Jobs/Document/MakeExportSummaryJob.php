@@ -58,6 +58,7 @@ class MakeExportSummaryJob implements ShouldQueue
             [
                 'regimen_id' => $this->data['regimen_id'] ?? null,
                 'incoterm_id' => $this->data['incoterm_id'] ?? null,
+                'tax_revenue_id' => $this->data['tax_revenue_id'] ?? null,
                 'insurance' => $this->data['insurance'] ?? 0,
                 'flete' => $this->data['flete'] ?? 0,
                 'observations' => $this->data['observations'] ?? null,
