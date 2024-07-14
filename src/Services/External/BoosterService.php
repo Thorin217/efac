@@ -149,7 +149,7 @@ final class BoosterService
         $data = array_merge($dataSummary, [
             'regimen_id' => $dataExportSummary['regime'] ?? null,
             'incoterm_id' => $dataExportSummary['incoterm'] ?? null,
-            'tax_revenue_id' => $$dataExportSummary['revenue'] ?? null,
+            'tax_revenue_id' => $dataExportSummary['revenue'] ?? null,
             'insurance' => $dataExportSummary['insurance'] ?? 0,
             'flete' => $dataExportSummary['freight'] ?? 0,
             'observations' => $dataExportSummary['observations'] ?? null,
