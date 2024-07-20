@@ -62,7 +62,7 @@ final class BoosterService
             'entity_id' => $data['emitter_entity_id'],
             'dte_type_id' => $dteType->id,
             'receiver_entity_id' => $receiverEntity->id,
-            'property_object_id' => null,
+            'property_object_id' => $data['property_object_id'] ?? null,
             'operation_condition_id' => $data['operation_condition'],
             'user_id' => $data['user_id'], # $salePoint->subsidiary->emitterEntity->entity->users()->role(RoleUserEnum::Employee->value)->first()->id
             'remote_id' => $data['remote_id'],
