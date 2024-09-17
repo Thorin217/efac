@@ -9,6 +9,7 @@ use Exactum\Efac\Models\Enterprise\SalePoint;
 use Exactum\Efac\Models\External\ContingencyType;
 use Exactum\Efac\Models\Token\ContingencyToken;
 use Carbon\Carbon;
+use Exactum\Efac\Efac;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -52,7 +53,7 @@ class Contingency extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(app(Efac::$userModel));
     }
 
     public function tokens()

@@ -12,6 +12,24 @@ class Efac
 
     public static $measurementUnitTable = 'measurement_units';
 
+    public static $userModel = 'App\\Models\\User';
+
+    public static $userTable = 'users';
+
+    public static function useUserModel(string $model)
+    {
+        static::$userModel = $model;
+
+        return new static;
+    }
+
+    public static function useUserTable(string $table)
+    {
+        static::$userTable = $table;
+
+        return new static;
+    }
+
     public static function useMeasurementUnitTable(string $table)
     {
         static::$measurementUnitTable = $table;
