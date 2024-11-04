@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Resources\External\Token\CDE;
+namespace Exactum\Efac\Http\Resources\External\Token\CDE;
 
-use App\Http\Resources\External\Token\CDE\Dependencies\CuerpoCDEResource;
-use App\Http\Resources\External\Token\CDE\Dependencies\EmisorCDEResource;
-use App\Http\Resources\External\Token\CDE\Dependencies\OtrosDocumentosCDEResource;
-use App\Http\Resources\External\Token\CDE\Dependencies\ReceptorCDEResource;
-use App\Http\Resources\External\Token\CDE\Dependencies\ResumenCDEResource;
-use App\Http\Resources\External\Token\Common\ApendiceResource;
-use App\Http\Resources\External\Token\Common\IdentificacionResource;
+use Exactum\Efac\Http\Resources\External\Token\CDE\Dependencies\CuerpoCDEResource;
+use Exactum\Efac\Http\Resources\External\Token\CDE\Dependencies\EmisorCDEResource;
+use Exactum\Efac\Http\Resources\External\Token\CDE\Dependencies\OtrosDocumentosCDEResource;
+use Exactum\Efac\Http\Resources\External\Token\CDE\Dependencies\ReceptorCDEResource;
+use Exactum\Efac\Http\Resources\External\Token\CDE\Dependencies\ResumenCDEResource;
+use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
+use Exactum\Efac\Http\Resources\External\Token\Common\IdentificacionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainCDEResource extends JsonResource

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\External\Token\NDE\Dependencies;
+namespace Exactum\Efac\Http\Resources\External\Token\NDE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

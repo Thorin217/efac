@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\External\Token\Contingency;
+namespace Exactum\Efac\Http\Resources\External\Token\Contingency;
 
-use App\Http\Resources\External\Token\Contingency\Dependencies\DetalleContingencyResource;
-use App\Http\Resources\External\Token\Contingency\Dependencies\EmisorContingencyResource;
-use App\Http\Resources\External\Token\Contingency\Dependencies\IdentificacionContingencyResource;
-use App\Http\Resources\External\Token\Contingency\Dependencies\MotivoContingencyResource;
+use Exactum\Efac\Http\Resources\External\Token\Contingency\Dependencies\DetalleContingencyResource;
+use Exactum\Efac\Http\Resources\External\Token\Contingency\Dependencies\EmisorContingencyResource;
+use Exactum\Efac\Http\Resources\External\Token\Contingency\Dependencies\IdentificacionContingencyResource;
+use Exactum\Efac\Http\Resources\External\Token\Contingency\Dependencies\MotivoContingencyResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainContingencyResource extends JsonResource

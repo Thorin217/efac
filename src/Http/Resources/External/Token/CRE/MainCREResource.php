@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources\External\Token\CRE;
+namespace Exactum\Efac\Http\Resources\External\Token\CRE;
 
-use App\Http\Resources\External\Token\Common\ApendiceResource;
-use App\Http\Resources\External\Token\Common\IdentificacionResource;
-use App\Http\Resources\External\Token\CRE\Dependencies\CuerpoCREResource;
-use App\Http\Resources\External\Token\CRE\Dependencies\EmisorCREResource;
-use App\Http\Resources\External\Token\CRE\Dependencies\ReceptorCREResource;
-use App\Http\Resources\External\Token\CRE\Dependencies\ResumenCREResource;
+use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
+use Exactum\Efac\Http\Resources\External\Token\Common\IdentificacionResource;
+use Exactum\Efac\Http\Resources\External\Token\CRE\Dependencies\CuerpoCREResource;
+use Exactum\Efac\Http\Resources\External\Token\CRE\Dependencies\EmisorCREResource;
+use Exactum\Efac\Http\Resources\External\Token\CRE\Dependencies\ReceptorCREResource;
+use Exactum\Efac\Http\Resources\External\Token\CRE\Dependencies\ResumenCREResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainCREResource extends JsonResource

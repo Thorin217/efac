@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources\External\Token\FSEE;
+namespace Exactum\Efac\Http\Resources\External\Token\FSEE;
 
-use App\Http\Resources\External\Token\Common\ApendiceResource;
-use App\Http\Resources\External\Token\Common\IdentificacionResource;
-use App\Http\Resources\External\Token\FSEE\Dependencies\CuerpoFSEEResource;
-use App\Http\Resources\External\Token\FSEE\Dependencies\EmisorFSEEResource;
-use App\Http\Resources\External\Token\FSEE\Dependencies\ReceptorFSEEResource;
-use App\Http\Resources\External\Token\FSEE\Dependencies\ResumenFSEEResource;
+use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
+use Exactum\Efac\Http\Resources\External\Token\Common\IdentificacionResource;
+use Exactum\Efac\Http\Resources\External\Token\FSEE\Dependencies\CuerpoFSEEResource;
+use Exactum\Efac\Http\Resources\External\Token\FSEE\Dependencies\EmisorFSEEResource;
+use Exactum\Efac\Http\Resources\External\Token\FSEE\Dependencies\ReceptorFSEEResource;
+use Exactum\Efac\Http\Resources\External\Token\FSEE\Dependencies\ResumenFSEEResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainFSEEResource extends JsonResource

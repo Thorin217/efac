@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Resources\External\Token\Cancellation\Dependencies;
+namespace Exactum\Efac\Http\Resources\External\Token\Cancellation\Dependencies;
 
-use App\Services\External\ExternalService;
+use Exactum\Efac\Services\External\ExternalService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MotivoCancellationResource extends JsonResource
