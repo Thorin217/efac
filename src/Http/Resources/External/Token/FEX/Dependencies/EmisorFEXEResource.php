@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\FEX\Dependencies;
+namespace App\Http\Resources\External\Token\FEX\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,8 +24,8 @@ class EmisorFEXEResource extends JsonResource
             'tipoEstablecimiento' => $this->resource->salePoint->subsidiary->establishmentType->goes_id,
             'direccion' => [
                 'departamento' => $this->resource->salePoint->subsidiary->city->department->goes_id,
-                'municipio' => $this->resource->salePoint->subsidiary->city->goes_id,
-                'complemento' => $this->resource->salePoint->subsidiary->address_complement,
+                'municipio' => $this->resource->salePoint->subsidiary->city->state->goes_id,
+                'complemento' => $this->resource->salePoint->subsidiary->address_complement . ', ' . $this->resource->salePoint->subsidiary->city->name,
             ],
             'telefono' => $this->resource->salePoint->subsidiary->emitterEntity->entity->phones->pluck('value')->implode(',')  ?: null,
             'correo' => $this->resource->salePoint->subsidiary->emitterEntity->entity->email,
@@ -33,12 +33,10 @@ class EmisorFEXEResource extends JsonResource
             'codEstable' => $this->resource->salePoint->subsidiary->code,
             'codPuntoVentaMH' => $this->resource->salePoint->goes_id,
             'codPuntoVenta' => $this->resource->salePoint->code,
-            #'tipoItemExpor' => $this->resource->itemTypeExportation(),
-            'tipoItemExpor' => (int) 1,
-            #'recintoFiscal' => $this->resource->exportation->taxRevenue->goes_id ?? null,
+            'tipoItemExpor' => $this->resource->itemTypeExportation(),
             'recintoFiscal' => null,
-            #'regimen' => $this->resource->exportation->regimen->goes_id ?? null,
-            'regimen' => 'EX-1.1000.000',
+            #'recintoFiscal' => $this->resource->exportation->taxRevenue->goes_id ?? null,
+            'regimen' => $this->resource->exportation->regimen->goes_id ?? null,
         ];
     }
 }

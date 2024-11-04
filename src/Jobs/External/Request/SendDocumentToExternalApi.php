@@ -170,6 +170,7 @@ class SendDocumentToExternalApi implements ShouldQueue
             $registerToken->seal_reception,
             $this->dte->salePoint->subsidiary->emitterEntity->entity->address_complement . ", " .
                 $this->dte->salePoint->subsidiary->emitterEntity->entity->city->name . ", " .
+                $this->dte->salePoint->subsidiary->emitterEntity->entity->city->state->name . ", " .
                 $this->dte->salePoint->subsidiary->emitterEntity->entity->city->department->name,
             Storage::url($photoEntity),
             $this->nitEmitter

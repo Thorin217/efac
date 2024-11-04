@@ -1,14 +1,14 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\NDE;
+namespace App\Http\Resources\External\Token\NDE;
 
-use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
-use Exactum\Efac\Http\Resources\External\Token\Common\IdentificacionResource;
-use Exactum\Efac\Http\Resources\External\Token\NDE\Dependencies\EmisorNDEResource;
-use Exactum\Efac\Http\Resources\External\Token\NDE\Dependencies\ReceptorNDEResource;
-use Exactum\Efac\Http\Resources\External\Token\NDE\Dependencies\RelacionadoNDEResource;
-use Exactum\Efac\Http\Resources\External\Token\NDE\Dependencies\CuerpoNDEResource;
-use Exactum\Efac\Http\Resources\External\Token\NDE\Dependencies\ResumenNDEResource;
+use App\Http\Resources\External\Token\Common\ApendiceResource;
+use App\Http\Resources\External\Token\Common\IdentificacionResource;
+use App\Http\Resources\External\Token\NDE\Dependencies\EmisorNDEResource;
+use App\Http\Resources\External\Token\NDE\Dependencies\ReceptorNDEResource;
+use App\Http\Resources\External\Token\NDE\Dependencies\RelacionadoNDEResource;
+use App\Http\Resources\External\Token\NDE\Dependencies\CuerpoNDEResource;
+use App\Http\Resources\External\Token\NDE\Dependencies\ResumenNDEResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainNDEResource extends JsonResource

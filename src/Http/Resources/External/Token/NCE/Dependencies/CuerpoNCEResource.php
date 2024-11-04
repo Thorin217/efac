@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\NCE\Dependencies;
+namespace App\Http\Resources\External\Token\NCE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -36,7 +36,7 @@ class CuerpoNCEResource extends JsonResource
             'numeroDocumento' => $this->documentNumber,
             'descripcion' => $this->resource->description,
             'cantidad' => (float) $this->resource->quantity,
-            'codigo' => $this->resource->productService->sku,
+            'codigo' => $this->resource->productService->code,
             'codTributo' => null, #TODO:
             'uniMedida' => (int) $this->resource->productService->measurementUnit->goes_id,
             'precioUni' => (float) $this->resource->unit_price,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\FSEE\Dependencies;
+namespace App\Http\Resources\External\Token\FSEE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +20,7 @@ class ResumenFSEEResource extends JsonResource
             'totalDescu' => (float) $this->resource->summary->total_discount,
             'subTotal' => (float) $this->resource->summary->sub_total,
             'ivaRete1' => (float) $this->resource->summary->IVA_withheld, #TODO: Add iva Rete calculation
-            'reteRenta' => (float) $this->resource->summary->income_withheld, #TODO: Add Tax Rete calculation
+            'reteRenta' => (float) $this->resource->summary->income_withheld,
             'totalPagar' => (float) $this->resource->summary->total_payable,
             'totalLetras' => $this->resource->summary->total_letter,
             'condicionOperacion' => $this->resource->operationCondition->goes_id,

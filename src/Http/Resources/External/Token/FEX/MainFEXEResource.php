@@ -1,13 +1,13 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\FEX;
+namespace App\Http\Resources\External\Token\FEX;
 
-use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
-use Exactum\Efac\Http\Resources\External\Token\FEX\Dependencies\CuerpoFEXEResource;
-use Exactum\Efac\Http\Resources\External\Token\FEX\Dependencies\EmisorFEXEResource;
-use Exactum\Efac\Http\Resources\External\Token\FEX\Dependencies\IdentificacionFEXEResource;
-use Exactum\Efac\Http\Resources\External\Token\FEX\Dependencies\ReceptorFEXEResource;
-use Exactum\Efac\Http\Resources\External\Token\FEX\Dependencies\ResumenFEXEResource;
+use App\Http\Resources\External\Token\Common\ApendiceResource;
+use App\Http\Resources\External\Token\FEX\Dependencies\CuerpoFEXEResource;
+use App\Http\Resources\External\Token\FEX\Dependencies\EmisorFEXEResource;
+use App\Http\Resources\External\Token\FEX\Dependencies\IdentificacionFEXEResource;
+use App\Http\Resources\External\Token\FEX\Dependencies\ReceptorFEXEResource;
+use App\Http\Resources\External\Token\FEX\Dependencies\ResumenFEXEResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainFEXEResource extends JsonResource

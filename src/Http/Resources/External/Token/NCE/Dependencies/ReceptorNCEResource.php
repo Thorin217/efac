@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\NCE\Dependencies;
+namespace App\Http\Resources\External\Token\NCE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,8 +26,8 @@ class ReceptorNCEResource extends JsonResource
             'direccion' => ($this->resource->receiverEntity->entity->address_complement && $this->resource->receiverEntity->entity->city_id)
                 ? [
                     'departamento' => $this->resource->receiverEntity->entity->city->department->goes_id,
-                    'municipio' => $this->resource->receiverEntity->entity->city->goes_id,
-                    'complemento' => $this->resource->receiverEntity->entity->address_complement,
+                    'municipio' => $this->resource->receiverEntity->entity->city->state->goes_id,
+                    'complemento' => $this->resource->receiverEntity->entity->address_complement . ',' . $this->resource->receiverEntity->entity->city->name,
                 ]
                 : null,
 

@@ -505,7 +505,12 @@ class Dte extends Model
                     'city.department',
                     'emitterEntity.entity' => function ($query) {
                         $query->with([
-                            'city.department',
+                            'city' => function ($query) {
+                                $query->with([
+                                    'department',
+                                    'state',
+                                ]);
+                            },
                             'economicActivity',
                             'docClientTypes',
                             'phones',
@@ -516,7 +521,12 @@ class Dte extends Model
             # Receiver Relantionships
             'receiverEntity.entity' => function ($query) {
                 $query->with([
-                    'city.department',
+                    'city' => function ($query) {
+                        $query->with([
+                            'department',
+                            'state',
+                        ]);
+                    },
                     'economicActivity',
                     'docClientTypes',
                     'phones',

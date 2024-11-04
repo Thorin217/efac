@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\Cancellation\Dependencies;
+namespace App\Http\Resources\External\Token\Cancellation\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,8 +15,8 @@ class IdentificacionCancellationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'version' => config('efac.cancellation_version'),
-            'ambiente' => config('efac.external_env'),
+            'version' => config('app.cancellation_version'),
+            'ambiente' => config('app.external_env'),
             'codigoGeneracion' => $this->resource->generate_code,
             'fecAnula' => $this->resource->getGenerateDate(),
             'horAnula' => $this->resource->getGenerateHour(),

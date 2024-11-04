@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\CCF\Dependencies;
+namespace App\Http\Resources\External\Token\CCF\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -32,7 +32,7 @@ class CuerpoCCFResource extends JsonResource
             'numItem' => $this->index,
             'tipoItem' => $this->resource->productService->itemType->goes_id,
             'numeroDocumento' => null, // TODO: complete this case
-            'codigo' => $this->resource->productService->sku,
+            'codigo' => $this->resource->productService->code,
             'codTributo' => null, // TODO: complete this case
             'descripcion' => $this->resource->description,
             'cantidad' => (float) $this->resource->quantity,

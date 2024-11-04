@@ -8,6 +8,7 @@ use Exactum\Efac\Enums\StatusEnum;
 use Exactum\Efac\Exceptions\FailedSendException;
 use Exactum\Efac\Models\Document\Dte;
 use Exactum\Efac\Models\External\City;
+use Exactum\Efac\Models\External\State;
 use Exactum\Efac\Models\External\TributesType;
 use Exactum\Efac\Models\Token\DteToken;
 use Exactum\Efac\Services\Events\ContingencyService;
@@ -119,7 +120,7 @@ final class ExternalService
      **/
     public static function getCityNameByGoesId($departmentId, $cityId)
     {
-        return City::where('goes_id', $cityId)->whereHas('department', function ($query) use ($departmentId) {
+        return State::where('goes_id', $cityId)->whereHas('department', function ($query) use ($departmentId) {
             $query->where('goes_id', $departmentId);
         })->first()->name ?? null;
     }

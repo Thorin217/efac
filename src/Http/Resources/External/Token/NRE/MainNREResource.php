@@ -1,13 +1,13 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\NRE;
+namespace App\Http\Resources\External\Token\NRE;
 
-use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
-use Exactum\Efac\Http\Resources\External\Token\Common\EmisorResource;
-use Exactum\Efac\Http\Resources\External\Token\Common\IdentificacionResource;
-use Exactum\Efac\Http\Resources\External\Token\NRE\Dependencies\CuerpoNREResource;
-use Exactum\Efac\Http\Resources\External\Token\NRE\Dependencies\ReceptorNREResource;
-use Exactum\Efac\Http\Resources\External\Token\NRE\Dependencies\ResumenNREResource;
+use App\Http\Resources\External\Token\Common\ApendiceResource;
+use App\Http\Resources\External\Token\Common\EmisorResource;
+use App\Http\Resources\External\Token\Common\IdentificacionResource;
+use App\Http\Resources\External\Token\NRE\Dependencies\CuerpoNREResource;
+use App\Http\Resources\External\Token\NRE\Dependencies\ReceptorNREResource;
+use App\Http\Resources\External\Token\NRE\Dependencies\ResumenNREResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainNREResource extends JsonResource

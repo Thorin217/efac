@@ -1,14 +1,14 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\NCE;
+namespace App\Http\Resources\External\Token\NCE;
 
-use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
-use Exactum\Efac\Http\Resources\External\Token\Common\IdentificacionResource;
-use Exactum\Efac\Http\Resources\External\Token\NCE\Dependencies\CuerpoNCEResource;
-use Exactum\Efac\Http\Resources\External\Token\NCE\Dependencies\EmisorNCEResource;
-use Exactum\Efac\Http\Resources\External\Token\NCE\Dependencies\ReceptorNCEResource;
-use Exactum\Efac\Http\Resources\External\Token\NCE\Dependencies\RelacionadoNCEResource;
-use Exactum\Efac\Http\Resources\External\Token\NCE\Dependencies\ResumenNCEResource;
+use App\Http\Resources\External\Token\Common\ApendiceResource;
+use App\Http\Resources\External\Token\Common\IdentificacionResource;
+use App\Http\Resources\External\Token\NCE\Dependencies\CuerpoNCEResource;
+use App\Http\Resources\External\Token\NCE\Dependencies\EmisorNCEResource;
+use App\Http\Resources\External\Token\NCE\Dependencies\ReceptorNCEResource;
+use App\Http\Resources\External\Token\NCE\Dependencies\RelacionadoNCEResource;
+use App\Http\Resources\External\Token\NCE\Dependencies\ResumenNCEResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainNCEResource extends JsonResource

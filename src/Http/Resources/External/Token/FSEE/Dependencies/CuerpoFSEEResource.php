@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\FSEE\Dependencies;
+namespace App\Http\Resources\External\Token\FSEE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,7 +25,7 @@ class CuerpoFSEEResource extends JsonResource
         return [
             'numItem' => $this->index,
             'tipoItem' => $this->resource->productService->itemType->goes_id,
-            'codigo' => $this->resource->productService->sku,
+            'codigo' => $this->resource->productService->code,
             'descripcion' => $this->resource->description,
             'cantidad' => (float) $this->resource->quantity,
             'uniMedida' => (int) $this->resource->productService->measurementUnit->goes_id,

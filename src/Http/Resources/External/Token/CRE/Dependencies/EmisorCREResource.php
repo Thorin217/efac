@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\CRE\Dependencies;
+namespace App\Http\Resources\External\Token\CRE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,8 +24,8 @@ class EmisorCREResource extends JsonResource
             'tipoEstablecimiento' => $this->resource->salePoint->subsidiary->establishmentType->goes_id,
             'direccion' => [
                 'departamento' => $this->resource->salePoint->subsidiary->city->department->goes_id,
-                'municipio' => $this->resource->salePoint->subsidiary->city->goes_id,
-                'complemento' => $this->resource->salePoint->subsidiary->address_complement,
+                'municipio' => $this->resource->salePoint->subsidiary->city->state->goes_id,
+                'complemento' => $this->resource->salePoint->subsidiary->address_complement . ', ' . $this->resource->salePoint->subsidiary->city->name,
             ],
             'telefono' => $this->resource->salePoint->subsidiary->emitterEntity->entity->phones->first()->value  ?: null,
             'correo' => $this->resource->salePoint->subsidiary->emitterEntity->entity->email,

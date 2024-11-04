@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\FSEE\Dependencies;
+namespace App\Http\Resources\External\Token\FSEE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,8 +22,8 @@ class EmisorFSEEResource extends JsonResource
             'descActividad' => $this->resource->salePoint->subsidiary->emitterEntity->entity->economicActivity->name,
             'direccion' => [
                 'departamento' => $this->resource->salePoint->subsidiary->city->department->goes_id,
-                'municipio' => $this->resource->salePoint->subsidiary->city->goes_id,
-                'complemento' => $this->resource->salePoint->subsidiary->address_complement,
+                'municipio' => $this->resource->salePoint->subsidiary->city->state->goes_id,
+                'complemento' => $this->resource->salePoint->subsidiary->address_complement . ', ' . $this->resource->salePoint->subsidiary->city->name,
             ],
             'telefono' => $this->resource->salePoint->subsidiary->emitterEntity->entity->phones->pluck('value')->implode(',')  ?: null,
             'correo' => $this->resource->salePoint->subsidiary->emitterEntity->entity->email,

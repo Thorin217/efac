@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\FCE\Dependencies;
+namespace App\Http\Resources\External\Token\FCE\Dependencies;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -44,7 +44,7 @@ class CuerpoFCEResource extends JsonResource
             'tipoItem' => $this->resource->productService->itemType->goes_id,
             'cantidad' => (float) $this->resource->quantity,
             'numeroDocumento' => null, #TODO:
-            'codigo' => $this->resource->productService->sku,
+            'codigo' => $this->resource->productService->code,
             'codTributo' => null, #TODO:
             'uniMedida' => (int) $this->resource->productService->measurementUnit->goes_id,
             'descripcion' => $this->resource->description,
@@ -52,7 +52,7 @@ class CuerpoFCEResource extends JsonResource
             'ventaNoSuj' => (float) $this->resource->total_item_no_subject,
             'ventaExenta' => (float) $this->resource->total_item_exempt,
             'psv' => 0,
-            'noGravado' => 0, #TODO:
+            'noGravado' => 0, // TODO:
         ]);
     }
 }

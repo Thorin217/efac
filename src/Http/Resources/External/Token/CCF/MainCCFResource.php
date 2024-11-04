@@ -1,13 +1,13 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\CCF;
+namespace App\Http\Resources\External\Token\CCF;
 
-use Exactum\Efac\Http\Resources\External\Token\CCF\Dependencies\CuerpoCCFResource;
-use Exactum\Efac\Http\Resources\External\Token\CCF\Dependencies\ReceptorCCFResource;
-use Exactum\Efac\Http\Resources\External\Token\CCF\Dependencies\ResumenCCFResource;
-use Exactum\Efac\Http\Resources\External\Token\Common\ApendiceResource;
-use Exactum\Efac\Http\Resources\External\Token\Common\EmisorResource;
-use Exactum\Efac\Http\Resources\External\Token\Common\IdentificacionResource;
+use App\Http\Resources\External\Token\CCF\Dependencies\CuerpoCCFResource;
+use App\Http\Resources\External\Token\CCF\Dependencies\ReceptorCCFResource;
+use App\Http\Resources\External\Token\CCF\Dependencies\ResumenCCFResource;
+use App\Http\Resources\External\Token\Common\ApendiceResource;
+use App\Http\Resources\External\Token\Common\EmisorResource;
+use App\Http\Resources\External\Token\Common\IdentificacionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainCCFResource extends JsonResource

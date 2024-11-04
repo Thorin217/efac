@@ -1,11 +1,11 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\Cancellation;
+namespace App\Http\Resources\External\Token\Cancellation;
 
-use Exactum\Efac\Http\Resources\External\Token\Cancellation\Dependencies\DocumentoCancellationResource;
-use Exactum\Efac\Http\Resources\External\Token\Cancellation\Dependencies\EmisorCancellationResource;
-use Exactum\Efac\Http\Resources\External\Token\Cancellation\Dependencies\IdentificacionCancellationResource;
-use Exactum\Efac\Http\Resources\External\Token\Cancellation\Dependencies\MotivoCancellationResource;
+use App\Http\Resources\External\Token\Cancellation\Dependencies\DocumentoCancellationResource;
+use App\Http\Resources\External\Token\Cancellation\Dependencies\EmisorCancellationResource;
+use App\Http\Resources\External\Token\Cancellation\Dependencies\IdentificacionCancellationResource;
+use App\Http\Resources\External\Token\Cancellation\Dependencies\MotivoCancellationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainCancellationResource extends JsonResource

@@ -1,6 +1,6 @@
 <?php
 
-namespace Exactum\Efac\Http\Resources\External\Token\Contingency\Dependencies;
+namespace App\Http\Resources\External\Token\Contingency\Dependencies;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
