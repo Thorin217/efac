@@ -16,7 +16,7 @@ class IdentificacionFEXEResource extends JsonResource
     {
         return [
             'version' => $this->resource->dteType->last_version,
-            'ambiente' => config('app.external_env'),
+            'ambiente' => config('efac.external_env'),
             'tipoDte' => $this->resource->dteType->goes_id,
             'numeroControl' => $this->resource->number_control,
             'codigoGeneracion' => $this->resource->generate_code,
@@ -26,7 +26,7 @@ class IdentificacionFEXEResource extends JsonResource
             'motivoContigencia' => $this->resource->contingency->description ?? null,
             'fecEmi' => $this->resource->getGenerateDate(),
             'horEmi' => $this->resource->getGenerateHour(),
-            'tipoMoneda' => config('app.currency'),
+            'tipoMoneda' => config('efac.currency'),
         ];;
     }
 }

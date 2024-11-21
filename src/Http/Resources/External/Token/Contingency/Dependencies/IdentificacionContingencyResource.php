@@ -16,8 +16,8 @@ class IdentificacionContingencyResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'version' => config('app.contingency_version'),
-            'ambiente' => config('app.external_env'),
+            'version' => config('efac.contingency_version'),
+            'ambiente' => config('efac.external_env'),
             'codigoGeneracion' => $this->resource->generate_code,
             'fTransmision' => Carbon::parse($this->resource->updated_at)->format('Y-m-d'),
             'hTransmision' => Carbon::parse($this->resource->updated_at)->format('H:i:s'),

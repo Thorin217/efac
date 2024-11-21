@@ -15,8 +15,8 @@ class IdentificacionCancellationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'version' => config('app.cancellation_version'),
-            'ambiente' => config('app.external_env'),
+            'version' => config('efac.cancellation_version'),
+            'ambiente' => config('efac.external_env'),
             'codigoGeneracion' => $this->resource->generate_code,
             'fecAnula' => $this->resource->getGenerateDate(),
             'horAnula' => $this->resource->getGenerateHour(),
