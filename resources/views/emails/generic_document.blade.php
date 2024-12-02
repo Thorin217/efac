@@ -80,7 +80,7 @@
         <hr>
         <div class="body">
             <div class="client-info">
-                <h2>¡Querido cliente!</h2>
+                <h2>¡Estimado cliente!</h2>
                 <p>{{ $receiverName }}</p>
             </div>
             <div class="condition">
