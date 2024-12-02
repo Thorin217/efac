@@ -473,7 +473,7 @@ class Dte extends Model
     public function itemTypeExportation()
     {
         return $this->dteItems()
-            ->join(Efac::$productServicesTable, 'dte_items.product_service_id', '=', 'product_services.id')
+            ->join(Efac::$productServicesTable, 'dte_items.product_service_id', '=', Efac::$productServicesTable . '.id')
             ->select(Efac::$productServicesTable. '.item_type_id')
             ->groupBy(Efac::$productServicesTable. '.item_type_id')
             ->get()
