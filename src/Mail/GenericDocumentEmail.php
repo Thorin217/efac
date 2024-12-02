@@ -55,7 +55,7 @@ class GenericDocumentEmail extends Mailable
         $this->pdfPath = $pdfPath;
         $this->photoEntity = $photoEntity;
 
-        $this->from($emitterEmail, $emitterName);
+        $this->from(config('mail.from.address'), $emitterName);
     }
 
     /**
