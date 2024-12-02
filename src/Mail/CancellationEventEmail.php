@@ -47,7 +47,7 @@ class CancellationEventEmail extends Mailable
         $this->dteType = $dteType;
         $this->dteDate = $dteDate;
 
-        $this->from($emitterEmail, $emitterName);
+        $this->from(config('mail.from.address'), $emitterName);
     }
 
     /**
