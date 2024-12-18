@@ -218,7 +218,7 @@
                                 <td class="bold-type">
                                     {{ ExternalService::getNameByGoesId('doc_client_types', $dte->receptor->tipoDocumento ?? null) ?? 'NIT' }}:
                                 </td>
-                                <td>{{ $dte->receptor->numDocumento ?? $dte->receptor->nit }}</td>
+                                <td>{{ $dte->receptor->numDocumento ?? ($dte->receptor->nit ?? '') }}</td>
                             </tr>
                             <tr>
                                 <td class="bold-type">NRC:</td>
