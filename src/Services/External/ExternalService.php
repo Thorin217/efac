@@ -285,6 +285,13 @@ final class ExternalService
         return $response->body();
     }
 
+    public static function getAddressDte($generateCode)
+    {
+        $dte = Dte::where('generate_code', $generateCode)->first();
+
+        return $dte->only_address;
+    }
+
     public static function sendContingencyDocument($token, $body, $contingencyToken)
     {
         $response = Http::api($token)->post('/fesv/contingencia', $body);

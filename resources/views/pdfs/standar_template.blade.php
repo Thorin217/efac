@@ -231,6 +231,11 @@
                             @if (isset($dte->receptor->direccion))
                                 <tr>
                                     <td class="bold-type">Dirección:</td>
+                                    @if (ExternalService::getAddressDte($dte->identificacion->codigoGeneracion))
+                                    <td>
+                                        {{ $dte->receptor->direccion->complemento }}
+                                    </td>
+                                    @else 
                                     <td>{{ $dte->receptor->direccion->complemento .
                                         ', ' .
                                         ExternalService::getCityNameByGoesId(
@@ -240,6 +245,7 @@
                                         ', ' .
                                         ExternalService::getNameByGoesId('departments', $dte->receptor->direccion->departamento) }}
                                     </td>
+                                    @endif
                                 </tr>
                             @endif
                             <tr>

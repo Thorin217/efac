@@ -68,11 +68,13 @@ class Dte extends Model
         'date',
         'remote_id',
         'documentable_id',
-        'documentable_type'
+        'documentable_type',
+        'only_address'
     ];
 
     protected $casts = [
         'status' => StatusEnum::class,
+        'only_address' => 'boolean'
     ];
 
     protected static $logFillable = true;
