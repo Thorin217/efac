@@ -71,7 +71,8 @@ final class BoosterService
             'model_type_id' => $modelType,
             'operation_type_id' => $operationType,
             'documentable_id' => $data['documentable_id'] ?? null,
-            'documentable_type' => $data['documentable_type'] ?? null
+            'documentable_type' => $data['documentable_type'] ?? null,
+            'only_address' => $data['only_address'] ?? null,
         ]);
     }
 
