@@ -115,6 +115,12 @@ class MakeSummaryJob implements ShouldQueue
 
         $mountTotal = $subTotal + $summedTributes;
 
+        $incomeWithheld = 0;
+
+        if ($this->discounts['apply_income_retention']) {
+            $incomeWithheld = $subTotal * 0.1;
+        }
+
         if ($this->discounts['apply_iva_retention']) {
             if ($this->dte->dte_type_id === 1) {
                 $ivaWithheld = calculateIvaWithheld(($subTotal  / config('efac.iva_factor')), 2);
@@ -123,7 +129,7 @@ class MakeSummaryJob implements ShouldQueue
             }
         }
 
-        $totalPayable = $mountTotal - $ivaWithheld; #+ ivaRete + Renta
+        $totalPayable = $mountTotal - $ivaWithheld - $incomeWithheld; #+ ivaRete + Renta
         $totalDiscount = $this->globalDiscounts + $itemsDiscount;
 
         ///*
@@ -139,6 +145,7 @@ class MakeSummaryJob implements ShouldQueue
                 'total_payable'  => $totalPayable,
                 'total_letter' => createLetters($totalPayable),
                 'IVA_withheld' => $ivaWithheld,
+                'income_withheld' => $incomeWithheld,
             ])
         );
 
