@@ -34,6 +34,7 @@ class Summary extends Model
         'total_IVA',
         'balance_favor',
         'number_virtual_paid',
+        'observations',
     ];
 
     public function dte()
