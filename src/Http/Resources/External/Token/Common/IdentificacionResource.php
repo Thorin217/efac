@@ -14,7 +14,7 @@ class IdentificacionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        return array_merge([
             'version' => $this->resource->dteType->last_version,
             'ambiente' => config('efac.external_env'),
             'tipoDte' => $this->resource->dteType->goes_id,
@@ -27,6 +27,8 @@ class IdentificacionResource extends JsonResource
             'fecEmi' => $this->resource->getGenerateDate(),
             'horEmi' => $this->resource->getGenerateHour(),
             'tipoMoneda' => config('efac.currency'),
-        ];
+        ], in_array($this->resource->dteType->goes_id, ['05', '06', '07']) ? [
+            'fusion' => null,
+        ] : []);
     }
 }

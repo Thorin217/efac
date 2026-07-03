@@ -37,15 +37,19 @@ class DocClientType extends Model
      **/
     public function formatDocValue()
     {
-        switch ($this->id) {
-            case 2:
-                $value = str_pad($this->pivot->value, 9, "0", STR_PAD_LEFT);
-                return substr($value, 0, 8) . "-" . substr($value, 8);
-                break;
+        // Hacienda espera los documentos numéricos (DUI, NIT) sin guiones en el
+        // JSON transmitido; el guion es solo una convención de visualización
+        // (confirmado por rechazo real de Hacienda en ambos casos).
+        return match ($this->goes_id) {
+            '13', '36' => $this->digitsOnly(),
+            default => $this->pivot->value,
+        };
+    }
 
-            default:
-                return $this->pivot->value;
-                break;
-        }
+    private function digitsOnly(): string
+    {
+        $digits = preg_replace('/\D/', '', (string) $this->pivot->value);
+
+        return $digits !== '' ? $digits : $this->pivot->value;
     }
 }

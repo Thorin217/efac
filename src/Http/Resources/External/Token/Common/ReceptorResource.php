@@ -14,11 +14,11 @@ class ReceptorResource extends JsonResource
      */
     public function toArray($request)
     {
-        $docClient = $this->resource->receiverEntity->entity->docClientTypes()->first(); #TODO: select document
+        $docClient = $this->resource->receiverEntity->entity->docClientTypes()->first();
 
         return [
             'tipoDocumento' => $docClient->goes_id ?? null,
-            'numDocumento' => $docClient->pivot->value ?? null,
+            'numDocumento' => $docClient?->formatDocValue() ?? null,
             'nrc' => $this->resource->receiverEntity->entity->NRC ?? null,
             'nombre' => $this->resource->receiverEntity->entity->name,
             'codActividad' => $this->resource->receiverEntity->entity->economicActivity->goes_id ?? null,
@@ -28,6 +28,7 @@ class ReceptorResource extends JsonResource
                 ? [
                     'departamento' => $this->resource->receiverEntity->entity->city->department->goes_id,
                     'municipio' => $this->resource->receiverEntity->entity->city->state->goes_id,
+                    'distrito' => $this->resource->receiverEntity->entity->city->goes_id,
                     'complemento' => $this->resource->receiverEntity->entity->address_complement . ', ' . $this->resource->receiverEntity->entity->city->name,
                 ]
                 : null,

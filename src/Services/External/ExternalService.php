@@ -185,7 +185,7 @@ final class ExternalService
 
     private static function generateBearerToken($body, $objectToken)
     {
-        $response = Http::loginapi()->asForm()->post('', $body);
+        $response = Http::loginapi()->asForm()->post('auth', $body);
 
         if ($response['status'] !== 'OK') {
             throw new FailedSendException(
