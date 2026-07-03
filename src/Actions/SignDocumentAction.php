@@ -56,7 +56,7 @@ class SignDocumentAction
 
     public function getCerticatePath(string $nit)
     {
-        return base_path('mh/' . $nit . '.crt');
+        return storage_path('app/mh/' . $nit . '.crt');
     }
 
     public function validateNit(string $nit)
