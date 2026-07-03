@@ -31,7 +31,6 @@ class MainFCEResource extends JsonResource
                 return CuerpoFCEResource::make($item, $index + 1);
             }),
             'resumen' => ResumenFCEResource::make($this->resource),
-            'extension' => null, #IN PROGRESS
             'apendice' => count($this->resource->appendices) !== 0 ? ApendiceResource::collection($this->resource->appendices) : null,
         ];
     }

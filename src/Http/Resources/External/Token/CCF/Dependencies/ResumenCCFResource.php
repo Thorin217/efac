@@ -2,6 +2,7 @@
 
 namespace Exactum\Efac\Http\Resources\External\Token\CCF\Dependencies;
 
+use Exactum\Efac\Http\Resources\Document\PaymentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResumenCCFResource extends JsonResource
@@ -32,17 +33,28 @@ class ResumenCCFResource extends JsonResource
             'totalDescu' => (float) $this->resource->summary->total_discount,
             'tributos' => $summaryTribute,
             'subTotal' => (float) $this->resource->summary->sub_total,
-            'ivaPerci1' => (float) 0,
-            'ivaRete1' => (float) $this->resource->summary->IVA_withheld, #TODO: Add iva Rete calculation
-            'reteRenta' => (float) $this->resource->summary->income_withheld, #TODO: Add Tax Rete calculation
+            'ivaPerci' => (float) 0,
+            'ivaRete' => (float) $this->resource->summary->IVA_withheld, #TODO: Add iva Rete calculation
             'montoTotalOperacion' => (float) $this->resource->summary->mount_total_operation,
             'totalNoGravado' => (float) $this->resource->summary->total_untaxed,
             'totalPagar' => (float) $this->resource->summary->total_payable,
             'totalLetras' => $this->resource->summary->total_letter,
             'saldoFavor' => (float) $this->resource->summary->balance_favor,
             'condicionOperacion' => $this->resource->operationCondition->goes_id,
-            'pagos' => null, #TODO: make jsonResource
+            'pagos' => $this->buildPagos(),
             'numPagoElectronico' => $this->resource->summary->number_virtual_paid,
+            'observaciones' => $this->resource->summary->observations ?? null,
         ];
+    }
+
+    private function buildPagos(): ?array
+    {
+        $payments = $this->resource->payments()->with(['paymentType', 'term'])->get();
+
+        if ($payments->isEmpty()) {
+            return null;
+        }
+
+        return PaymentResource::collection($payments)->resolve();
     }
 }

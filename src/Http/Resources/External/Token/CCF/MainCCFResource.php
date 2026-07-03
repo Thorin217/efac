@@ -31,7 +31,6 @@ class MainCCFResource extends JsonResource
                 return CuerpoCCFResource::make($item, $index + 1);
             }),
             'resumen' => ResumenCCFResource::make($this->resource),
-            'extension' => null, #IN PROGRESS
             'apendice' => count($this->resource->appendices) !== 0 ? ApendiceResource::collection($this->resource->appendices) : null,
         ];
     }

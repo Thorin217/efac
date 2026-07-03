@@ -14,10 +14,10 @@ class ReceptorCCFResource extends JsonResource
      */
     public function toArray($request)
     {
-        $docClient = $this->resource->receiverEntity->entity->docClientTypes()->where('default', true)->first();
+        $docClient = $this->resource->receiverEntity->entity->docClientTypes()->first();
 
         return [
-            'nit' => $docClient->pivot->value ?? null,
+            'nit' => $docClient?->formatDocValue() ?? null,
             'nrc' => $this->resource->receiverEntity->entity->NRC ?? null,
             'nombre' => $this->resource->receiverEntity->entity->name,
             'nombreComercial' => $this->resource->receiverEntity->entity->comercial_name ?? null,
@@ -27,6 +27,7 @@ class ReceptorCCFResource extends JsonResource
                 ? [
                     'departamento' => $this->resource->receiverEntity->entity->city->department->goes_id,
                     'municipio' => $this->resource->receiverEntity->entity->city->state->goes_id,
+                    'distrito' => $this->resource->receiverEntity->entity->city->goes_id,
                     'complemento' => $this->resource->receiverEntity->entity->address_complement . ', ' . $this->resource->receiverEntity->entity->city->name,
                 ]
                 : null,

@@ -25,6 +25,7 @@ class EmisorCREResource extends JsonResource
             'direccion' => [
                 'departamento' => $this->resource->salePoint->subsidiary->city->department->goes_id,
                 'municipio' => $this->resource->salePoint->subsidiary->city->state->goes_id,
+                'distrito' => $this->resource->salePoint->subsidiary->city->goes_id,
                 'complemento' => $this->resource->salePoint->subsidiary->address_complement . ', ' . $this->resource->salePoint->subsidiary->city->name,
             ],
             'telefono' => $this->resource->salePoint->subsidiary->emitterEntity->entity->phones->first()->value  ?: null,

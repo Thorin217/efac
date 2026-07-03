@@ -2,6 +2,7 @@
 
 namespace Exactum\Efac\Http\Resources\External\Token\CDE\Dependencies;
 
+use Exactum\Efac\Http\Resources\Document\PaymentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResumenCDEResource extends JsonResource
@@ -17,7 +18,18 @@ class ResumenCDEResource extends JsonResource
         return [
             'valorTotal' => (float) $this->resource->summary->total_no_subject,
             'totalLetras' => $this->resource->summary->total_letter,
-            'pagos' => null, #TODO: make jsonResource
+            'pagos' => $this->buildPagos(),
         ];
+    }
+
+    private function buildPagos(): ?array
+    {
+        $payments = $this->resource->payments()->with(['paymentType', 'term'])->get();
+
+        if ($payments->isEmpty()) {
+            return null;
+        }
+
+        return PaymentResource::collection($payments)->resolve();
     }
 }
