@@ -23,10 +23,10 @@ class IdentificacionFEXEResource extends JsonResource
             'tipoModelo' => $this->resource->modelType->goes_id,
             'tipoOperacion' => $this->resource->operationType->goes_id,
             'tipoContingencia' => $this->resource->contingency->contingencyType->goes_id ?? null,
-            'motivoContigencia' => $this->resource->contingency->description ?? null,
+            'motivoContin' => $this->resource->contingency->description ?? null,
             'fecEmi' => $this->resource->getGenerateDate(),
             'horEmi' => $this->resource->getGenerateHour(),
             'tipoMoneda' => config('efac.currency'),
-        ];;
+        ];
     }
 }

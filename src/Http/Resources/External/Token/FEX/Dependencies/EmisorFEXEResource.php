@@ -21,22 +21,35 @@ class EmisorFEXEResource extends JsonResource
             'codActividad' => $this->resource->salePoint->subsidiary->emitterEntity->entity->economicActivity->goes_id,
             'descActividad' => $this->resource->salePoint->subsidiary->emitterEntity->entity->economicActivity->name,
             'nombreComercial' => $this->resource->salePoint->subsidiary->emitterEntity->entity->comercial_name,
-            'tipoEstablecimiento' => $this->resource->salePoint->subsidiary->establishmentType->goes_id,
             'direccion' => [
                 'departamento' => $this->resource->salePoint->subsidiary->city->department->goes_id,
                 'municipio' => $this->resource->salePoint->subsidiary->city->state->goes_id,
+                'distrito' => $this->resource->salePoint->subsidiary->city->goes_id,
                 'complemento' => $this->resource->salePoint->subsidiary->address_complement . ', ' . $this->resource->salePoint->subsidiary->city->name,
             ],
             'telefono' => $this->resource->salePoint->subsidiary->emitterEntity->entity->phones->pluck('value')->implode(',')  ?: null,
             'correo' => $this->resource->salePoint->subsidiary->emitterEntity->entity->email,
-            'codEstableMH' => $this->resource->salePoint->subsidiary->goes_id,
             'codEstable' => $this->resource->salePoint->subsidiary->code,
-            'codPuntoVentaMH' => $this->resource->salePoint->goes_id,
             'codPuntoVenta' => $this->resource->salePoint->code,
             'tipoItemExpor' => $this->resource->itemTypeExportation(),
-            'recintoFiscal' => null,
-            #'recintoFiscal' => $this->resource->exportation->taxRevenue->goes_id ?? null,
+            'recintoFiscal' => $this->resource->itemTypeExportation() === 1 ? ($this->resource->exportation->taxRevenue->goes_id ?? null) : null,
+            'tipoRegimen' => $this->resource->itemTypeExportation() === 1 ? $this->extractTipoRegimen() : null,
             'regimen' => $this->resource->exportation->regimen->goes_id ?? null,
         ];
+    }
+
+    // El código de "regimen" (CAT-028) es compuesto: {EX-1|EX-2|EX-3}.{regimen}.{correlativo};
+    // el prefijo de 4 caracteres antes del primer punto es el código CAT-033 "Tipo de Régimen"
+    // que Hacienda espera por separado (no existe tabla catálogo CAT-033 independiente en el
+    // sistema, se deriva de este prefijo: EX-1=Exportación Definitiva, EX-2=Temporal, EX-3=Reexportación).
+    private function extractTipoRegimen(): ?string
+    {
+        $goesId = $this->resource->exportation->regimen->goes_id ?? null;
+
+        if (!$goesId || !preg_match('/^([A-Z]{2}-\d)\./', $goesId, $matches)) {
+            return null;
+        }
+
+        return $matches[1];
     }
 }

@@ -22,10 +22,12 @@ class MainFEXEResource extends JsonResource
     {
         return [
             'identificacion' => IdentificacionFEXEResource::make($this->resource),
+            'documentoRelacionado' => null, #IN PROGRESS
             'emisor' => EmisorFEXEResource::make($this->resource),
             'receptor' => ReceptorFEXEResource::make($this->resource),
             'otrosDocumentos' => null, #IN PROGRESS
             'ventaTercero' => null, #IN PROGRESS
+            'compraTercero' => null, #IN PROGRESS
             'cuerpoDocumento' => $this->resource->dteItems->map(function ($item, $index) {
                 return CuerpoFEXEResource::make($item, $index + 1);
             }),
