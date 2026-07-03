@@ -26,18 +26,18 @@ class ResumenNCEResource extends JsonResource
             'totalExenta' => (float) $this->resource->summary->total_exempt,
             'totalGravada' => (float) $this->resource->summary->total,
             'subTotalVentas' => (float) $this->resource->summary->sub_total_sales,
-            'descuNoSuj' => (float) $this->resource->summary->discount_not_subject,
-            'descuExenta' => (float) $this->resource->summary->discount_exempt,
-            'descuGravada' => (float) $this->resource->summary->discount,
             'totalDescu' => (float) $this->resource->summary->total_discount,
             'tributos' => $summaryTribute,
-            'subTotal' => (float) $this->resource->summary->sub_total,
-            'ivaPerci1' => (float) 0,
-            'ivaRete1' => (float) $this->resource->summary->IVA_withheld, #TODO: Add iva Rete calculation
-            'reteRenta' => (float) $this->resource->summary->income_withheld, #TODO: Add Tax Rete calculation
             'montoTotalOperacion' => $newMountTotalOperation,
+            'ivaPerci' => 0.0,
+            'totalIva' => (float) $this->resource->summary->total_IVA,
+            'ivaRete' => (float) $this->resource->summary->IVA_withheld,
+            'totalNoGravado' => (float) $this->resource->summary->total_untaxed,
+            'totalPagar' => (float) $this->resource->summary->total_payable,
             'totalLetras' => createLetters($newMountTotalOperation),
             'condicionOperacion' => $this->resource->operationCondition->goes_id,
+            'observaciones' => $this->resource->summary->observations ?? null,
+            'codigoRetencionMH' => null,
         ];
     }
 }

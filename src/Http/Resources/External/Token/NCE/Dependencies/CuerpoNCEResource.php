@@ -45,6 +45,10 @@ class CuerpoNCEResource extends JsonResource
             'ventaExenta' => (float) $this->resource->total_item_exempt,
             'ventaGravada' => (float) $this->resource->total_item,
             'tributos' => $tributes,
+            'noGravado' => 0.0,
+            'ivaPerci' => 0.0,
+            'totalIva' => 0.0, // Monto a ajustar de IVA 13% (solo aplica a correcciones específicas de IVA, no al IVA normal del ítem)
+            'ivaRete' => 0.0,
         ];
     }
 }

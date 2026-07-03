@@ -33,7 +33,6 @@ class MainNCEResource extends JsonResource
                 return CuerpoNCEResource::make($item, $index + 1, $documentNumber);
             }),
             'resumen' => ResumenNCEResource::make($this->resource),
-            'extension' => null, #IN PROGRESS
             'apendice' => count($this->resource->appendices) !== 0 ? ApendiceResource::collection($this->resource->appendices) : null,
         ];
     }
