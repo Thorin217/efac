@@ -17,7 +17,8 @@ class ReceptorNDEResource extends JsonResource
         $docClient = $this->resource->receiverEntity->entity->docClientTypes()->where('default', true)->first();
 
         return [
-            'nit' => $docClient->pivot->value ?? null,
+            'tipoDocumento' => $docClient->goes_id ?? null,
+            'numDocumento' => $docClient?->formatDocValue() ?? null,
             'nrc' => $this->resource->receiverEntity->entity->NRC ?? null,
             'nombre' => $this->resource->receiverEntity->entity->name,
             'nombreComercial' => $this->resource->receiverEntity->entity->comercial_name ?? null,
@@ -27,6 +28,7 @@ class ReceptorNDEResource extends JsonResource
                 ? [
                     'departamento' => $this->resource->receiverEntity->entity->city->department->goes_id,
                     'municipio' => $this->resource->receiverEntity->entity->city->state->goes_id,
+                    'distrito' => $this->resource->receiverEntity->entity->city->goes_id,
                     'complemento' => $this->resource->receiverEntity->entity->address_complement . ', ' . $this->resource->receiverEntity->entity->city->name,
                 ]
                 : null,

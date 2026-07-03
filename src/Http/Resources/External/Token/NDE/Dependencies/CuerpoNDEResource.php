@@ -45,6 +45,10 @@ class CuerpoNDEResource extends JsonResource
             'ventaExenta' => (float) $this->resource->total_item_exempt,
             'ventaGravada' => (float) $this->resource->total_item,
             'tributos' => $tributes,
+            'noGravado' => 0.0,
+            'ivaPerci' => 0.0,
+            'totalIva' => 0.0,
+            'ivaRete' => 0.0,
         ];
     }
 }

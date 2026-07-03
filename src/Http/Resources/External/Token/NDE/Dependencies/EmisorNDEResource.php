@@ -21,10 +21,10 @@ class EmisorNDEResource extends JsonResource
             'codActividad' => $this->resource->salePoint->subsidiary->emitterEntity->entity->economicActivity->goes_id,
             'descActividad' => $this->resource->salePoint->subsidiary->emitterEntity->entity->economicActivity->name,
             'nombreComercial' => $this->resource->salePoint->subsidiary->emitterEntity->entity->comercial_name,
-            'tipoEstablecimiento' => $this->resource->salePoint->subsidiary->establishmentType->goes_id,
             'direccion' => [
                 'departamento' => $this->resource->salePoint->subsidiary->city->department->goes_id,
                 'municipio' => $this->resource->salePoint->subsidiary->city->state->goes_id,
+                'distrito' => $this->resource->salePoint->subsidiary->city->goes_id,
                 'complemento' => $this->resource->salePoint->subsidiary->address_complement . ', ' . $this->resource->salePoint->subsidiary->city->name,
             ],
             'telefono' => $this->resource->salePoint->subsidiary->emitterEntity->entity->phones->pluck('value')->implode(',')  ?: null,
