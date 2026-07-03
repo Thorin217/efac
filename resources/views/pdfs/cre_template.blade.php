@@ -2,7 +2,10 @@
 <html>
 @php
     use Exactum\Efac\Services\External\ExternalService;
-    use SimpleSoftwareIO\QrCode\Facades\QrCode;
+    use BaconQrCode\Renderer\ImageRenderer;
+    use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+    use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+    use BaconQrCode\Writer;
     use Exactum\Efac\Efac;
 
     $linkData =
@@ -10,7 +13,8 @@
         config('efac.external_env') .
         "&codGen={$dte->identificacion->codigoGeneracion}&fechaEmi=" .
         $dte->identificacion->fecEmi;
-    $qrCodeBase64 = base64_encode(QrCode::errorCorrection('L')->format('png')->generate($linkData));
+    $writer = new Writer(new ImageRenderer(new RendererStyle(200), new ImagickImageBackEnd()));
+    $qrCodeBase64 = base64_encode($writer->writeString($linkData));
     $urlLogo = $photoEntity ? public_path($photoEntity) : public_path('img/email/app-logo.png');
 @endphp
 
@@ -110,7 +114,7 @@
                     <img src="{{ $urlLogo }}" alt="enterprise Logo" style="max-width: 200px">
                 </td>
                 <td class="td-50-right">
-                    <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code">
+                    <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code" style="width: 110px; height: 110px;">
                 </td>
             </tr>
         </table>
@@ -153,6 +157,14 @@
                 </td>
             </tr>
         </table>
+        @if ($dte->identificacion->descripcion ?? false)
+        <table class="table-100 indentification-info" style="margin-top: 4px">
+            <tr>
+                <td class="bold-type" style="width: 15%">Descripción:</td>
+                <td>{{ $dte->identificacion->descripcion }}</td>
+            </tr>
+        </table>
+        @endif
         <br>
         <table class="table-100">
             <tr>

@@ -2,7 +2,10 @@
 <html>
 @php
     use Exactum\Efac\Services\External\ExternalService;
-    use SimpleSoftwareIO\QrCode\Facades\QrCode;
+    use BaconQrCode\Renderer\ImageRenderer;
+    use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+    use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+    use BaconQrCode\Writer;
     use Exactum\Efac\Efac;
 
     $linkData =
@@ -10,7 +13,8 @@
         config('efac.external_env') .
         "&codGen={$dte->identificacion->codigoGeneracion}&fechaEmi=" .
         $dte->identificacion->fecEmi;
-    $qrCodeBase64 = base64_encode(QrCode::errorCorrection('L')->format('png')->generate($linkData));
+    $writer = new Writer(new ImageRenderer(new RendererStyle(200), new ImagickImageBackEnd()));
+    $qrCodeBase64 = base64_encode($writer->writeString($linkData));
     $urlLogo = $photoEntity ? public_path($photoEntity) : public_path('img/email/app-logo.png');
 @endphp
 
@@ -110,7 +114,7 @@
                     <img src="{{ $urlLogo }}" alt="enterprise Logo" style="max-width: 200px">
                 </td>
                 <td class="td-50-right">
-                    <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code">
+                    <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code" style="width: 110px; height: 110px;">
                 </td>
             </tr>
         </table>
@@ -153,6 +157,14 @@
                 </td>
             </tr>
         </table>
+        @if ($dte->identificacion->descripcion ?? false)
+        <table class="table-100 indentification-info" style="margin-top: 4px">
+            <tr>
+                <td class="bold-type" style="width: 15%">Descripción:</td>
+                <td>{{ $dte->identificacion->descripcion }}</td>
+            </tr>
+        </table>
+        @endif
         <br>
         <table class="table-100">
             <tr>
@@ -379,7 +391,7 @@
                         </tr>
                         <tr>
                             <td>Observaciones:</td>
-                            <td>{{ $dte->extension->observaciones ?? '' }}</td>
+                            <td>{{ $dte->resumen->observaciones ?? '' }}</td>
                         </tr>
                         @if ($dte->resumen->condicionOperacion ?? false)
                             <tr>
@@ -451,42 +463,50 @@
                                     ${{ formatTwoDecimals($dte->resumen->subTotalVentas) }}
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Descuento global no sujeto</td>
-                                <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->descuNoSuj) }}</td>
-                            </tr>
-                            <tr>
-                                <td>Descuento global exento</td>
-                                <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->descuExenta) }}</td>
-                            </tr>
-                            <tr>
-                                <td>Descuento global gravado</td>
-                                <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->descuGravada) }}
-                                </td>
-                            </tr>
+                            @if (isset($dte->resumen->descuNoSuj))
+                                <tr>
+                                    <td>Descuento global no sujeto</td>
+                                    <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->descuNoSuj) }}</td>
+                                </tr>
+                            @endif
+                            @if (isset($dte->resumen->descuExenta))
+                                <tr>
+                                    <td>Descuento global exento</td>
+                                    <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->descuExenta) }}</td>
+                                </tr>
+                            @endif
+                            @if (isset($dte->resumen->descuGravada))
+                                <tr>
+                                    <td>Descuento global gravado</td>
+                                    <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->descuGravada) }}
+                                    </td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td class="border-bottom-black">Total descuentos</td>
                                 <td class="text-number-right border-bottom-black">
                                     ${{ formatTwoDecimals($dte->resumen->totalDescu) }}
                                 </td>
                             </tr>
-                            <tr class="bold-type">
-                                <td class="border-bottom-black">Sub-total</td>
-                                <td class="text-number-right border-bottom-black">
-                                    ${{ formatTwoDecimals($dte->resumen->subTotal) }}
-                                </td>
-                            </tr>
+                            @if (isset($dte->resumen->subTotal))
+                                <tr class="bold-type">
+                                    <td class="border-bottom-black">Sub-total</td>
+                                    <td class="text-number-right border-bottom-black">
+                                        ${{ formatTwoDecimals($dte->resumen->subTotal) }}
+                                    </td>
+                                </tr>
+                            @endif
                             @foreach ($dte->resumen->tributos ?? collect() as $tribute)
                                 <tr>
                                     <td>{{ "$tribute->codigo - $tribute->descripcion" }}</td>
                                     <td class="text-number-right">${{ formatTwoDecimals($tribute->valor) }}</td>
                                 </tr>
                             @endforeach
-                            @if ($dte->resumen->ivaRete1 ?? false)
+                            @if ($dte->resumen->ivaRete ?? false)
                                 <tr>
                                     <td class="border-top-black">IVA retenido</td>
                                     <td class="text-number-right border-top-black">
-                                        ${{ formatTwoDecimals($dte->resumen->ivaRete1) }}
+                                        ${{ formatTwoDecimals($dte->resumen->ivaRete) }}
                                     </td>
                                 </tr>
                             @endif
