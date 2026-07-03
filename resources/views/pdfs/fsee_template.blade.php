@@ -2,7 +2,10 @@
 <html>
 @php
     use Exactum\Efac\Services\External\ExternalService;
-    use SimpleSoftwareIO\QrCode\Facades\QrCode;
+    use BaconQrCode\Renderer\ImageRenderer;
+    use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+    use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+    use BaconQrCode\Writer;
     use Exactum\Efac\Efac;
 
     $linkData =
@@ -10,7 +13,8 @@
         config('efac.external_env') .
         "&codGen={$dte->identificacion->codigoGeneracion}&fechaEmi=" .
         $dte->identificacion->fecEmi;
-    $qrCodeBase64 = base64_encode(QrCode::errorCorrection('L')->format('png')->generate($linkData));
+    $writer = new Writer(new ImageRenderer(new RendererStyle(200), new ImagickImageBackEnd()));
+    $qrCodeBase64 = base64_encode($writer->writeString($linkData));
     $urlLogo = $photoEntity ? public_path($photoEntity) : public_path('img/email/app-logo.png');
 @endphp
 
@@ -110,7 +114,7 @@
                     <img src="{{ $urlLogo }}" alt="enterprise Logo" style="max-width: 200px">
                 </td>
                 <td class="td-50-right">
-                    <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code">
+                    <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code" style="width: 110px; height: 110px;">
                 </td>
             </tr>
         </table>
@@ -153,6 +157,14 @@
                 </td>
             </tr>
         </table>
+        @if ($dte->identificacion->descripcion ?? false)
+        <table class="table-100 indentification-info" style="margin-top: 4px">
+            <tr>
+                <td class="bold-type" style="width: 15%">Descripción:</td>
+                <td>{{ $dte->identificacion->descripcion }}</td>
+            </tr>
+        </table>
+        @endif
         <br>
         <table class="table-100">
             <tr>
@@ -182,14 +194,14 @@
                             </tr>
                             <tr>
                                 <td class="bold-type">Dirección:</td>
-                                <td>{{ $dte->sujetoExcluido->direccion->complemento .
+                                <td>{{ $dte->emisor->direccion->complemento .
                                     ', ' .
                                     ExternalService::getCityNameByGoesId(
-                                        $dte->sujetoExcluido->direccion->departamento,
+                                        $dte->emisor->direccion->departamento,
                                         $dte->emisor->direccion->municipio,
                                     ) .
                                     ', ' .
-                                    ExternalService::getNameByGoesId('departments', $dte->sujetoExcluido->direccion->departamento) }}
+                                    ExternalService::getNameByGoesId('departments', $dte->emisor->direccion->departamento) }}
                                 </td>
                             </tr>
                             <tr>
@@ -214,13 +226,13 @@
                         <tbody>
                             <tr>
                                 <td class="bold-type">Nombre:</td>
-                                <td>{{ $dte->sujetoExcluido->nombre }}</td>
+                                <td>{{ $dte->receptor->nombre }}</td>
                             </tr>
                             <tr>
                                 <td class="bold-type">
-                                    {{ ExternalService::getNameByGoesId('doc_client_types', $dte->sujetoExcluido->tipoDocumento ?? null) ?? 'NIT' }}:
+                                    {{ ExternalService::getNameByGoesId('doc_client_types', $dte->receptor->tipoDocumento ?? null) ?? 'NIT' }}:
                                 </td>
-                                <td>{{ $dte->sujetoExcluido->numDocumento }}</td>
+                                <td>{{ $dte->receptor->numDocumento }}</td>
                             </tr>
                             <tr>
                                 <td class="bold-type"></td>
@@ -228,28 +240,28 @@
                             </tr>
                             <tr>
                                 <td class="bold-type">Actividad Económica:</td>
-                                <td>{{ "{$dte->sujetoExcluido->codActividad} - {$dte->sujetoExcluido->descActividad}" }}
+                                <td>{{ "{$dte->receptor->codActividad} - {$dte->receptor->descActividad}" }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="bold-type">Dirección:</td>
-                                <td>{{ $dte->sujetoExcluido->direccion->complemento .
+                                <td>{{ $dte->receptor->direccion->complemento .
                                     ', ' .
                                     ExternalService::getCityNameByGoesId(
-                                        $dte->sujetoExcluido->direccion->departamento,
-                                        $dte->sujetoExcluido->direccion->municipio,
+                                        $dte->receptor->direccion->departamento,
+                                        $dte->receptor->direccion->municipio,
                                     ) .
                                     ', ' .
-                                    ExternalService::getNameByGoesId('departments', $dte->sujetoExcluido->direccion->departamento) }}
+                                    ExternalService::getNameByGoesId('departments', $dte->receptor->direccion->departamento) }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="bold-type">Numero de teléfono:</td>
-                                <td>{{ $dte->sujetoExcluido->telefono }}</td>
+                                <td>{{ $dte->receptor->telefono }}</td>
                             </tr>
                             <tr>
                                 <td class="bold-type">Correo electrónico:</td>
-                                <td>{{ $dte->sujetoExcluido->correo }}</td>
+                                <td>{{ $dte->receptor->correo }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -339,10 +351,6 @@
                                 <td>Sub-total</td>
                                 <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->subTotal) }}
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>IVA retenida</td>
-                                <td class="text-number-right">${{ formatTwoDecimals($dte->resumen->ivaRete1) }}</td>
                             </tr>
                             <tr>
                                 <td>Renta retenida</td>

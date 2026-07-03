@@ -23,7 +23,7 @@ class MainFSEEResource extends JsonResource
         return [
             'identificacion' => IdentificacionResource::make($this->resource),
             'emisor' => EmisorFSEEResource::make($this->resource),
-            'sujetoExcluido' => ReceptorFSEEResource::make($this->resource),
+            'receptor' => ReceptorFSEEResource::make($this->resource),
             'cuerpoDocumento' => $this->resource->dteItems->map(function ($item, $index) {
                 return CuerpoFSEEResource::make($item, $index + 1);
             }),

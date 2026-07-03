@@ -12,7 +12,7 @@ class Payment extends Model
     protected $fillable = [
         'payment_type_id',
         'term_id',
-        'summary_id',
+        'dte_id',
         'mount',
         'reference',
         'period',

@@ -3,6 +3,7 @@
 namespace Exactum\Efac\Jobs\Document;
 
 use Exactum\Efac\Models\Document\Dte;
+use Exactum\Efac\Models\External\Term;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -153,8 +154,44 @@ class MakeSummaryJob implements ShouldQueue
             $summaryDte->tributesTypes()->sync($summaryTributes);
         }
 
+        $this->createPaymentIfRequested($summaryDte->total_payable);
+
         if ($this->discounts['send_document'])
             $this->dte->dispatchJobToMakeToken();
         //*/
+    }
+
+    private function createPaymentIfRequested(float $totalPayable): void
+    {
+        if (empty($this->discounts['payment_type_id'])) {
+            return;
+        }
+
+        $isCredit = (string) $this->dte->operationCondition->goes_id === '2';
+
+        $termId = null;
+        $period = null;
+
+        if ($isCredit) {
+            $days = $this->dte->documentable?->paymentCondition?->days
+                ?? $this->discounts['payment_condition_days']
+                ?? 0;
+
+            if ($days > 0) {
+                $termId = Term::where('goes_id', '01')->value('id');
+                $period = $days;
+            }
+        }
+
+        $this->dte->payments()->updateOrCreate(
+            [],
+            [
+                'payment_type_id' => $this->discounts['payment_type_id'],
+                'term_id'         => $termId,
+                'mount'           => $isCredit ? 0.0 : $totalPayable,
+                'reference'       => $this->discounts['payment_reference'] ?? null,
+                'period'          => $period,
+            ]
+        );
     }
 }
