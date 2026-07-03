@@ -34,7 +34,7 @@ class EfacServiceProvider extends ServiceProvider
             return Http::withHeaders([
                 'Accept' => ExternalEnum::HeaderJson->value,
                 'Content-Type' => ExternalEnum::HeaderFormEncoded->value,
-            ])->baseUrl(config('efac.url_api') . 'seguridad/auth/');
+            ])->baseUrl(config('efac.url_api') . 'seguridad');
         });
 
         Http::macro('api', function ($token) {

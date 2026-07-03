@@ -54,6 +54,6 @@ class MakeCDEJsonTokenJob implements ShouldQueue
 
         Logger('NO PODEMOS EMITIR DE ESTOS TnT');
 
-        validateWithJsonSchema($objectForToken, JsonSchemaFileNameEnum::CDE, $this->dte);
+        validateWithJsonSchema($objectForToken, JsonSchemaFileNameEnum::resolve($this->dte->dteType->goes_id, $this->dte->dteType->last_version), $this->dte);
     }
 }

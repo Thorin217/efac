@@ -63,7 +63,7 @@ class MakeNCEJsonTokenJob implements ShouldQueue
             $this->dte->salePoint->subsidiary->emitterEntity->signer_password,
             $this->dte->salePoint->subsidiary->emitterEntity->api_password,
             $objectForToken,
-            JsonSchemaFileNameEnum::NCE
+            JsonSchemaFileNameEnum::resolve($this->dte->dteType->goes_id, $this->dte->dteType->last_version)
         );
     }
 }

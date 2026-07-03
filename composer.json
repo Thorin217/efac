@@ -1,7 +1,7 @@
 {
     "name": "exactum/efac",
     "description": "Package for the electronic billing module of El Salvador",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -11,12 +11,12 @@
     ],
     "require": {
         "php": "^8.0.2",
-        "barryvdh/laravel-dompdf": "^2.0",
+        "barryvdh/laravel-dompdf": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
         "kwn/number-to-words": "^2.6",
         "lcobucci/jwt": "^5.3",
         "maatwebsite/excel": "^3.1",
-        "simplesoftwareio/simple-qrcode": "^4.2",
+        "bacon/bacon-qr-code": "^3.0",
         "spatie/laravel-activitylog": "^4.7",
         "justinrainbow/json-schema": "^5.2"
     },

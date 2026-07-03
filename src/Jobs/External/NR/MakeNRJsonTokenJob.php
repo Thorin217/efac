@@ -58,7 +58,7 @@ class MakeNRJsonTokenJob implements ShouldQueue
             $this->dte->salePoint->subsidiary->emitterEntity->signer_password,
             $this->dte->salePoint->subsidiary->emitterEntity->api_password,
             $objectForToken,
-            JsonSchemaFileNameEnum::NRE
+            JsonSchemaFileNameEnum::resolve($this->dte->dteType->goes_id, $this->dte->dteType->last_version)
         );
     }
 }
