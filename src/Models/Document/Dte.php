@@ -449,6 +449,31 @@ class Dte extends Model
     }
 
     /**
+     * Builds the public "consulta pública" URL to view this document on Hacienda's site.
+     *
+     * @return string|null
+     **/
+    public function buildExternalConsultingUrl(): ?string
+    {
+        $baseUrl = rtrim((string) config('efac.consulting_url'), '/');
+
+        $queryString = http_build_query(
+            [
+                'ambiente' => config('efac.external_env'),
+                'codGen' => strtoupper($this->generate_code),
+                'fechaEmi' => $this->getGenerateDate(),
+            ],
+            '',
+            '&',
+            PHP_QUERY_RFC3986
+        );
+
+        $separator = str_contains($baseUrl, '?') ? '&' : '?';
+
+        return $baseUrl . $separator . $queryString;
+    }
+
+    /**
      * getEmitterEntity function summary
      *
      * getEmitterEntity function long description
