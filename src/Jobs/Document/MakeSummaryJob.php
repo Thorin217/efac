@@ -188,7 +188,10 @@ class MakeSummaryJob implements ShouldQueue
             [
                 'payment_type_id' => $this->discounts['payment_type_id'],
                 'term_id'         => $termId,
-                'mount'           => $isCredit ? 0.0 : $totalPayable,
+                // Hacienda rechaza/observa el DTE si montoPago difiere de totalPagar,
+                // aun con condicionOperacion=2 (credito); el plazo/periodo ya reflejan
+                // que es a credito, no hace falta reportar $0.00 en montoPago.
+                'mount'           => $totalPayable,
                 'reference'       => $this->discounts['payment_reference'] ?? null,
                 'period'          => $period,
             ]
