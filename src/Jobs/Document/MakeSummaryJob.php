@@ -173,12 +173,12 @@ class MakeSummaryJob implements ShouldQueue
         $period = null;
 
         if ($isCredit) {
-            $days = $this->dte->documentable?->paymentCondition?->days
-                ?? $this->discounts['payment_condition_days']
+            $days = $this->discounts['payment_condition_days']
+                ?? $this->dte->documentable?->paymentCondition?->days
                 ?? 0;
 
             if ($days > 0) {
-                $termId = Term::where('goes_id', '01')->value('id');
+                $termId = Term::where('goes_id', $this->discounts['term_goes_id'] ?? '01')->value('id');
                 $period = $days;
             }
         }
