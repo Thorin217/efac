@@ -330,7 +330,7 @@ final class DocumentService
         }
         //*/
 
-        ResendExternalMinistryTokenJob::dispatch($dte);
+        ResendExternalMinistryTokenJob::dispatchSync($dte);
     }
 
     /**
