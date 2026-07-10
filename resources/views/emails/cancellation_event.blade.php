@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 @php
-    $urlLogo = isset($photoEntity) ? $photoEntity : 'img/pdf/app-logo.png';
+    $urlLogo = !empty($photoEntity) && is_file(public_path($photoEntity)) ? $photoEntity : 'img/pdf/app-logo.png';
     $linkData = 'https://admin.factura.gob.sv/consultaPublica?ambiente=' . config('efac.external_env') . "&codGen={$generateCode}&fechaEmi=" . explode(' ', $dteDate)[0];
 @endphp
 

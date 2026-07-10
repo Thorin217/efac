@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 @php
-    $urlLogo = isset($photoEntity) ? $photoEntity : 'img/pdf/app-logo.png';
+    $urlLogo = !empty($photoEntity) && is_file(public_path($photoEntity)) ? $photoEntity : 'img/pdf/app-logo.png';
 @endphp
 
 <head>
