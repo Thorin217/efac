@@ -18,7 +18,8 @@ class LastDteTokenResource extends JsonResource
         }
 
         if ($this->token == DefaultsEnum::MessageErrorSigner->value) {
-            $data['signer_error'] = json_decode($this->error_message)->mensaje;
+            $decoded = json_decode($this->error_message);
+            $data['signer_error'] = is_object($decoded) ? ($decoded->mensaje ?? $this->error_message) : $this->error_message;
             return $data;
         }
 
