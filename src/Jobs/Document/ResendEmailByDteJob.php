@@ -19,6 +19,8 @@ class ResendEmailByDteJob implements ShouldQueue
 
     private $tokenSuccessInfo;
 
+    private $overrideEmail;
+
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private function getSuccessDteJson($token)
@@ -33,7 +35,7 @@ class ResendEmailByDteJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Dte $dte)
+    public function __construct(Dte $dte, ?string $overrideEmail = null)
     {
         $this->dte = $dte->load([
             'receiverEntity.entity'
@@ -41,6 +43,7 @@ class ResendEmailByDteJob implements ShouldQueue
         $this->tokenSuccessInfo = $dte->tokens()
             ->whereNotNull('seal_reception')
             ->first();
+        $this->overrideEmail = $overrideEmail;
     }
 
     /**
@@ -68,7 +71,7 @@ class ResendEmailByDteJob implements ShouldQueue
             $this->dte->generate_code,
             $entityInfo->entity->email,
             $entityInfo->entity->name,
-            $this->dte->receiverEntity->entity->email,
+            $this->overrideEmail ?: $this->dte->receiverEntity->entity->email,
             $this->dte->receiverEntity->entity->name,
             $this->getSuccessDteJson($this->tokenSuccessInfo->token),
             $this->tokenSuccessInfo->seal_reception,

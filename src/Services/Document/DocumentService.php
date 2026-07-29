@@ -287,13 +287,14 @@ final class DocumentService
      * @return type
      * @throws conditon
      **/
-    public function resendEmailByDte(Dte $dte)
+    public function resendEmailByDte(Dte $dte, ?string $overrideEmail = null)
     {
         if (!$dte->tokens()->whereNotNull('seal_reception')->exists())
             throw new CustomHttpException('El documento no ha sido aprobado por el ministerio');
 
         ResendEmailByDteJob::dispatch(
             $dte,
+            $overrideEmail,
         );
     }
 
