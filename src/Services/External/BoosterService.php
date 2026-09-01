@@ -95,6 +95,9 @@ final class BoosterService
                 'quantity' => $productService['quantity'],
                 'discount' => $productService['discount'],
                 'untaxed' => $productService['untaxed'] ?? false,
+                // Override opcional por item para ventas mixtas -- si no viene,
+                // Dte::generateDteItem() usa el del receptor como siempre.
+                'sale_type_id' => $productService['sale_type_id'] ?? null,
             ]);
         }
 

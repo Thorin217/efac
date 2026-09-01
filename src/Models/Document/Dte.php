@@ -360,7 +360,12 @@ class Dte extends Model
     {
         $ivaItem = 0;
         $unitPrice = $details['unit_price'] ?? $productService->unit_price;
-        $saleType = $this->calculateDteItemMethods($this->receiverEntity->saleType->id);
+        // Un documento puede llevar ventas mixtas (algunos items Gravados,
+        // otros Exentos/No sujetos dentro del mismo DTE, ver seccion 8 del
+        // manual -- ventaGravada/ventaExenta/ventaNoSuj son por item). Si el
+        // item trae su propio sale_type_id se usa ese; si no, se hereda el
+        // del receptor como antes.
+        $saleType = $this->calculateDteItemMethods($details['sale_type_id'] ?? $this->receiverEntity->saleType->id);
 
         if ($this->dte_type_id === 1 && $saleType === $this->attributeTableName[3]) {
             $ivaItem = ($productService->PriceWithTributesForFCE($unitPrice) * $details['quantity']) - ($details['discount'] ?? 0);
