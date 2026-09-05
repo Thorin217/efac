@@ -11,9 +11,9 @@ use SimpleXMLElement;
 
 class SignDocumentAction
 {
-    public function handler(string $nit, string $passwordPri, $dteJson)
+    public function handler(string $nit, string $passwordPri, $dteJson, string $ambiente = '01')
     {
-        $xml = $this->getCertificateInXml($nit);
+        $xml = $this->getCertificateInXml($nit, $ambiente);
 
         $passwordDocument = (string) $xml->privateKey->clave;
 
@@ -43,9 +43,9 @@ class SignDocumentAction
         return "-----BEGIN PRIVATE KEY-----\n" . chunk_split(base64_encode(base64_decode($key)), 64, "\n") . "-----END PRIVATE KEY-----\n";
     }
 
-    public function getCertificateInXml(string $nit): SimpleXMLElement | false
+    public function getCertificateInXml(string $nit, string $ambiente = '01'): SimpleXMLElement | false
     {
-        $certificatePath = $this->getCerticatePath($nit);
+        $certificatePath = $this->getCerticatePath($nit, $ambiente);
 
         $certificate = File::get($certificatePath);
 
@@ -54,9 +54,16 @@ class SignDocumentAction
         return $xml;
     }
 
-    public function getCerticatePath(string $nit)
+    /**
+     * Hacienda emite un certificado distinto para el ambiente de pruebas
+     * (aunque sea el mismo NIT que en produccion) -- se guarda aparte en
+     * storage/app/mh/test/ para no pisar el de produccion.
+     */
+    public function getCerticatePath(string $nit, string $ambiente = '01')
     {
-        return storage_path('app/mh/' . $nit . '.crt');
+        $subdirectory = $ambiente === '00' ? 'test/' : '';
+
+        return storage_path('app/mh/' . $subdirectory . $nit . '.crt');
     }
 
     public function validateNit(string $nit)

@@ -183,9 +183,9 @@ final class ExternalService
         return [$modelTypeId, $operationTypeId];
     }
 
-    private static function generateBearerToken($body, $objectToken)
+    private static function generateBearerToken($body, $objectToken, string $ambiente = '01')
     {
-        $response = Http::loginapi()->asForm()->post('auth', $body);
+        $response = Http::loginapi($ambiente)->asForm()->post('auth', $body);
 
         if ($response['status'] !== 'OK') {
             throw new FailedSendException(
@@ -203,13 +203,15 @@ final class ExternalService
         $passwordApi,
         $dteJson,
         &$registerToken,
+        string $ambiente = '01',
     ) {
         $signerDocumentAction = new SignDocumentAction();
         try {
             $registerToken->token = $signerDocumentAction->handler(
                 $nitEmitter,
                 Crypt::decryptString($passwordSigner),
-                json_decode($dteJson)
+                json_decode($dteJson),
+                $ambiente,
             );
         } catch (Exception $exception) {
             $registerToken->token = DefaultsEnum::MessageErrorSigner->value;
@@ -220,7 +222,10 @@ final class ExternalService
             );
         }
 
-        $bearerToken = Cache::get($nitEmitter);
+        // El bearer token de pruebas no sirve contra la API de produccion (ni
+        // viceversa) -- se cachea por separado para no mezclarlos.
+        $cacheKey = "{$nitEmitter}_{$ambiente}";
+        $bearerToken = Cache::get($cacheKey);
 
         if (!$bearerToken) {
             $requestLogin = [
@@ -228,17 +233,17 @@ final class ExternalService
                 'pwd' =>  Crypt::decryptString($passwordApi),
             ];
 
-            $bearerToken = self::generateBearerToken($requestLogin, $registerToken);
-            Cache::put($nitEmitter, $bearerToken, 72000);
+            $bearerToken = self::generateBearerToken($requestLogin, $registerToken, $ambiente);
+            Cache::put($cacheKey, $bearerToken, 72000);
         }
 
         return $bearerToken;
     }
 
-    public static function sendOneToOneDocument($token, $body, DteToken $dteToken, Dte $dte)
+    public static function sendOneToOneDocument($token, $body, DteToken $dteToken, Dte $dte, string $ambiente = '01')
     {
         try {
-            $response = Http::api($token)->post('/fesv/recepciondte/', $body);
+            $response = Http::api($token, $ambiente)->post('/fesv/recepciondte/', $body);
         } catch (\Throwable $th) {
             ContingencyService::manageContigencyFromSpecificDte($dte);
         }
@@ -267,9 +272,9 @@ final class ExternalService
         return $response->body();
     }
 
-    public static function sendCancellationDocument($token, $body, $cancellationToken)
+    public static function sendCancellationDocument($token, $body, $cancellationToken, string $ambiente = '01')
     {
-        $response = Http::api($token)->post('/fesv/anulardte', $body);
+        $response = Http::api($token, $ambiente)->post('/fesv/anulardte', $body);
 
         if ($response->failed()) {
             $cancellationToken->load(['cancellation']);
@@ -292,9 +297,9 @@ final class ExternalService
         return $dte->only_address;
     }
 
-    public static function sendContingencyDocument($token, $body, $contingencyToken)
+    public static function sendContingencyDocument($token, $body, $contingencyToken, string $ambiente = '01')
     {
-        $response = Http::api($token)->post('/fesv/contingencia', $body);
+        $response = Http::api($token, $ambiente)->post('/fesv/contingencia', $body);
 
         if ($response->failed() || $response['estado'] == 'RECHAZADO') {
             $contingencyToken->load(['contingency']);
@@ -310,10 +315,10 @@ final class ExternalService
         return $response->body();
     }
 
-    public static function getDocumentCondition($token, $body)
+    public static function getDocumentCondition($token, $body, string $ambiente = '01')
     {
         try {
-            $response = Http::api($token)->post('/fesv/recepcion/consultadte/', $body);
+            $response = Http::api($token, $ambiente)->post('/fesv/recepcion/consultadte/', $body);
         } catch (\Throwable $th) {
             return false;
         }

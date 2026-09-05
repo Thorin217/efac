@@ -50,13 +50,18 @@ class MakeCCFJsonTokenJob implements ShouldQueue
 
         $objectForToken = json_encode(MainCCFResource::make($this->dte));
 
+        $emitter = $this->dte->salePoint->subsidiary->emitterEntity;
+        $ambiente = $this->dte->ambiente;
+
         SendDocumentToExternalApi::dispatchSync(
             $this->dte,
-            $this->dte->salePoint->subsidiary->emitterEntity->entity->docClientTypes()->where('default', true)->first()->pivot->value,
-            $this->dte->salePoint->subsidiary->emitterEntity->signer_password,
-            $this->dte->salePoint->subsidiary->emitterEntity->api_password,
+            $emitter->entity->docClientTypes()->where('default', true)->first()->pivot->value,
+            $emitter->signerPasswordFor($ambiente),
+            $emitter->apiPasswordFor($ambiente),
             $objectForToken,
-            JsonSchemaFileNameEnum::resolve($this->dte->dteType->goes_id, $this->dte->dteType->last_version)
+            JsonSchemaFileNameEnum::resolve($this->dte->dteType->goes_id, $this->dte->dteType->last_version),
+            null,
+            $ambiente,
         );
     }
 }

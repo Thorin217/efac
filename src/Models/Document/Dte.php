@@ -69,7 +69,8 @@ class Dte extends Model
         'remote_id',
         'documentable_id',
         'documentable_type',
-        'only_address'
+        'only_address',
+        'ambiente',
     ];
 
     protected $casts = [
@@ -464,7 +465,7 @@ class Dte extends Model
 
         $queryString = http_build_query(
             [
-                'ambiente' => config('efac.external_env'),
+                'ambiente' => $this->ambiente ?? config('efac.external_env'),
                 'codGen' => strtoupper($this->generate_code),
                 'fechaEmi' => $this->getGenerateDate(),
             ],

@@ -29,6 +29,7 @@ class SendDocumentToExternalApi implements ShouldQueue
     private $dteJson;
     private $nameJsonSchema;
     private $bladeTemplate;
+    private $ambiente;
 
     /**
      * Create a new job instance.
@@ -43,6 +44,7 @@ class SendDocumentToExternalApi implements ShouldQueue
         $dteJson,
         $jsonSchema,
         $bladeTemplate = null,
+        string $ambiente = '01',
     ) {
         $this->dte = $dte;
         $this->nitEmitter = $nitEmitter;
@@ -51,6 +53,7 @@ class SendDocumentToExternalApi implements ShouldQueue
         $this->dteJson = $dteJson;
         $this->nameJsonSchema = $jsonSchema->value;
         $this->bladeTemplate = $bladeTemplate->value ?? null;
+        $this->ambiente = $ambiente;
 
         $this->dte->status = StatusEnum::Sent->value;
         $this->dte->save();
@@ -117,7 +120,8 @@ class SendDocumentToExternalApi implements ShouldQueue
             $this->passwordSigner,
             $this->passwordApi,
             $this->dteJson,
-            $registerToken
+            $registerToken,
+            $this->ambiente,
         );
 
         $checkDocumentBefore = [
@@ -126,19 +130,19 @@ class SendDocumentToExternalApi implements ShouldQueue
             'codigoGeneracion' => $this->dte->generate_code,
         ];
 
-        $externalSealReception = ExternalService::getDocumentCondition($bearerToken, $checkDocumentBefore);
+        $externalSealReception = ExternalService::getDocumentCondition($bearerToken, $checkDocumentBefore, $this->ambiente);
 
         if (!$externalSealReception) {
             $oneToOneRequest = [
                 'version' => $this->dte->dteType->last_version,
                 'idEnvio' => rand(0, 999999999),
-                'ambiente' => config('efac.external_env'),
+                'ambiente' => $this->ambiente,
                 'tipoDte' => $this->dte->dteType->goes_id,
                 'documento' => $registerToken->token,
                 'codigoGeneracion' => $this->dte->generate_code,
             ];
 
-            $externalSealReception = ExternalService::sendOneToOneDocument($bearerToken, $oneToOneRequest, $registerToken, $this->dte);
+            $externalSealReception = ExternalService::sendOneToOneDocument($bearerToken, $oneToOneRequest, $registerToken, $this->dte, $this->ambiente);
         }
 
         $registerToken->seal_reception = $externalSealReception;

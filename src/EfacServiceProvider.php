@@ -30,19 +30,23 @@ class EfacServiceProvider extends ServiceProvider
             __DIR__.'/../resources/schemas' => resource_path('schemas'),
         ], 'efac-views');
 
-        Http::macro('loginapi', function () {
+        Http::macro('loginapi', function ($ambiente = '01') {
+            $baseUrl = $ambiente === '00' ? config('efac.url_api_test') : config('efac.url_api');
+
             return Http::withHeaders([
                 'Accept' => ExternalEnum::HeaderJson->value,
                 'Content-Type' => ExternalEnum::HeaderFormEncoded->value,
-            ])->baseUrl(config('efac.url_api') . 'seguridad');
+            ])->baseUrl($baseUrl . 'seguridad');
         });
 
-        Http::macro('api', function ($token) {
+        Http::macro('api', function ($token, $ambiente = '01') {
+            $baseUrl = $ambiente === '00' ? config('efac.url_api_test') : config('efac.url_api');
+
             return Http::withHeaders([
                 'Accept' => ExternalEnum::HeaderJson->value,
                 'Content-Type' => ExternalEnum::HeaderJson->value,
                 'Authorization' => $token,
-            ])->baseUrl(config('efac.url_api'));
+            ])->baseUrl($baseUrl);
         });
     }
 

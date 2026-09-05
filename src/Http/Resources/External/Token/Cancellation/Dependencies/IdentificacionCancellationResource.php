@@ -16,7 +16,7 @@ class IdentificacionCancellationResource extends JsonResource
     {
         return [
             'version' => config('efac.cancellation_version'),
-            'ambiente' => config('efac.external_env'),
+            'ambiente' => $this->resource->dte->ambiente ?? config('efac.external_env'),
             'codigoGeneracion' => $this->resource->generate_code,
             'fecAnula' => $this->resource->getGenerateDate(),
             'horAnula' => $this->resource->getGenerateHour(),

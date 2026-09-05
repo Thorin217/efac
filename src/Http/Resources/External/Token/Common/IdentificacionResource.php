@@ -16,7 +16,7 @@ class IdentificacionResource extends JsonResource
     {
         return array_merge([
             'version' => $this->resource->dteType->last_version,
-            'ambiente' => config('efac.external_env'),
+            'ambiente' => $this->resource->ambiente ?? config('efac.external_env'),
             'tipoDte' => $this->resource->dteType->goes_id,
             'numeroControl' => $this->resource->number_control,
             'codigoGeneracion' => $this->resource->generate_code,

@@ -24,6 +24,7 @@ class SendCancellationToExternalApi implements ShouldQueue
     private $passwordApi;
     private $dteJson;
     private $nameJsonSchema;
+    private $ambiente;
 
     /**
      * Create a new job instance.
@@ -36,7 +37,8 @@ class SendCancellationToExternalApi implements ShouldQueue
         $passwordSigner,
         $passwordApi,
         $dteJson,
-        $jsonSchema
+        $jsonSchema,
+        string $ambiente = '01',
     ) {
         $this->cancellation = $cancellation;
         $this->nitEmitter = $nitEmitter;
@@ -44,6 +46,7 @@ class SendCancellationToExternalApi implements ShouldQueue
         $this->passwordApi = $passwordApi;
         $this->dteJson = $dteJson;
         $this->nameJsonSchema = $jsonSchema->value;
+        $this->ambiente = $ambiente;
 
         $this->cancellation->status =  StatusEnum::Rejected->value;
         $this->cancellation->save();
@@ -69,17 +72,18 @@ class SendCancellationToExternalApi implements ShouldQueue
             $this->passwordSigner,
             $this->passwordApi,
             $this->dteJson,
-            $registerToken
+            $registerToken,
+            $this->ambiente,
         );
 
         $cancellationRequest = [
-            'ambiente' => config('efac.external_env'),
+            'ambiente' => $this->ambiente,
             'idEnvio' => rand(0, 999999999),
             'version' => config('efac.cancellation_version'),
             'documento' => $registerToken->token,
         ];
 
-        $externalSealReception = ExternalService::sendCancellationDocument($bearerToken, $cancellationRequest, $registerToken);
+        $externalSealReception = ExternalService::sendCancellationDocument($bearerToken, $cancellationRequest, $registerToken, $this->ambiente);
 
         $registerToken->seal_reception = $externalSealReception;
         $registerToken->save();

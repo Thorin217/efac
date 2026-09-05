@@ -16,6 +16,8 @@ class EmitterEntity extends Model
         'entity_id',
         'api_password',
         'signer_password',
+        'api_password_test',
+        'signer_password_test',
     ];
 
     protected static $logFillable = true;
@@ -30,6 +32,22 @@ class EmitterEntity extends Model
     public function subsidiaries()
     {
         return $this->hasMany(Subsidiary::class);
+    }
+
+    /**
+     * '00' (pruebas) usa las credenciales de pruebas; cualquier otro valor
+     * (produccion) usa las de siempre. Ambas se guardan encriptadas igual
+     * que las de produccion -- ver ExternalService::getBearerToken() para el
+     * unico punto donde se desencriptan antes de usarse.
+     */
+    public function signerPasswordFor(string $ambiente): ?string
+    {
+        return $ambiente === '00' ? $this->signer_password_test : $this->signer_password;
+    }
+
+    public function apiPasswordFor(string $ambiente): ?string
+    {
+        return $ambiente === '00' ? $this->api_password_test : $this->api_password;
     }
 
     /**

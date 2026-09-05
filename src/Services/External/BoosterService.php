@@ -2,6 +2,7 @@
 
 namespace Exactum\Efac\Services\External;
 
+use App\Models\Team;
 use Exactum\Efac\Efac;
 use Exactum\Efac\Jobs\Document\MakeExportSummaryJob;
 use Exactum\Efac\Jobs\Document\MakeSummaryJob;
@@ -58,6 +59,11 @@ final class BoosterService
             [$modelType, $operationType] = ExternalService::getDependenciesContingency();
         }
 
+        // '00' (pruebas) si el equipo dueno de esta entidad emisora esta
+        // marcado como demo -- se fija una sola vez aqui, al crear el DTE, no
+        // se vuelve a recalcular despues aunque el equipo deje de ser demo.
+        $isDemoTeam = Team::where('entity_id', $data['emitter_entity_id'])->value('is_demo');
+
         return $this->documentService->createDocument([
             'entity_id' => $data['emitter_entity_id'],
             'dte_type_id' => $dteType->id,
@@ -73,6 +79,7 @@ final class BoosterService
             'documentable_id' => $data['documentable_id'] ?? null,
             'documentable_type' => $data['documentable_type'] ?? null,
             'only_address' => $data['only_address'] ?? null,
+            'ambiente' => $isDemoTeam ? '00' : '01',
         ]);
     }
 
