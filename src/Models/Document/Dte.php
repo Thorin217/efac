@@ -455,6 +455,39 @@ class Dte extends Model
     }
 
     /**
+     * Fecha limite para transmitir el evento de invalidacion, segun el Manual
+     * Funcional de Hacienda:
+     *  - FE (01), FEXE (11) y FSEE (14): hasta 3 meses despues de la fecha de
+     *    generacion del DTE.
+     *  - CCFE, NRE, NCE, NDE, CRE, CLE, DCLE y CDE: hasta el decimo dia habil
+     *    del mes siguiente al periodo tributario del Sello de Recepcion.
+     *
+     * El calculo de dias habiles no contempla asuetos; es una verificacion
+     * previa y Hacienda sigue siendo la fuente de verdad del plazo.
+     */
+    public function invalidationDeadline(): Carbon
+    {
+        $emittedAt = Carbon::createFromFormat('Y-m-d H:i:s', $this->date);
+
+        if (in_array($this->dteType->goes_id, ['01', '11', '14'], true)) {
+            return $emittedAt->copy()->addMonthsNoOverflow(3)->endOfDay();
+        }
+
+        $deadline = $emittedAt->copy()->addMonthNoOverflow()->startOfMonth();
+        $businessDays = $deadline->isWeekday() ? 1 : 0;
+
+        while ($businessDays < 10) {
+            $deadline->addDay();
+
+            if ($deadline->isWeekday()) {
+                $businessDays++;
+            }
+        }
+
+        return $deadline->endOfDay();
+    }
+
+    /**
      * Builds the public "consulta pública" URL to view this document on Hacienda's site.
      *
      * @return string|null
